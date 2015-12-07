@@ -14,28 +14,53 @@ class GameObjects {
     var screenHeight: CGFloat!
     private var missileUUID: Int = 0
     private var asteroidUUID:Int = 0
-    let missileSpeed:CGFloat = 500;
-    private var lastFireTime = 0
+    let missileSpeed:CGFloat = 600;
+    private var lastFireTime = NSDate()
+    private var cannonAnimationFrames = [SKTexture]()
+    private let defaultButton = "AsteroidBlasterButton"
+    private let defaultButtonTap = "AsteroidBlasterButton_click"
+    var deviceResolution:String!
     
     init (scene: GameScene){
         self.screenWidth = scene.frame.size.width
         self.screenHeight = scene.frame.size.height
+        
+        if (self.screenHeight > 1000){
+            self.deviceResolution = "@3x"
+        } else {
+            self.deviceResolution = "@2x"
+        }
+        
     }
+    
+    /* ------------ GAME LOGO -------- */
+    
+    func getLogo() -> SKSpriteNode{
+        let logo = SKSpriteNode(imageNamed: "asteroidBlasterLogo")
+        logo.position = CGPoint(x: self.screenWidth/2, y: self.screenHeight - logo.size.height / 2 - 32)
+        logo.zPosition = 5
+        return logo
+    }
+    
+    /* ------------ GAME BACKGROUND -------- */
     
     func getBackground() -> SKSpriteNode {
         let backgroundImage = SKSpriteNode(imageNamed: "background")
         backgroundImage.position = CGPointMake(self.screenWidth / 2, self.screenHeight / 2)
         backgroundImage.size = CGSizeMake(self.screenWidth, self.screenHeight)
         backgroundImage.zPosition = 0
+        
         return backgroundImage
     }
     
-    func createCannon() -> (cannon: SKSpriteNode, animationFrames: [SKTexture]) {
+    /* ------------ GAME CANNON -------- */
+    
+    func createCannon() -> SKSpriteNode {
         let cannonAtlas = SKTextureAtlas(named: "Cannon")
         var motionFrames = [SKTexture]()
         let numImages = cannonAtlas.textureNames.count / 3
         for (var i = 1; i <= numImages; i++){
-            let cannonTextureName = "launcher_cannon.\(i)@2x.png"
+            let cannonTextureName = "launcher_cannon.\(i)\(self.deviceResolution).png"
             motionFrames.append(cannonAtlas.textureNamed(cannonTextureName))
         }
         let firstFrame = motionFrames[10]
@@ -44,26 +69,73 @@ class GameObjects {
         cannon.position = CGPoint(x:(self.screenWidth / 2), y: yLoc)
         cannon.name = "Cannon"
         cannon.zPosition = 2
-        //rotateCannon(cannon, animationFrames: motionFrames)
+        self.cannonAnimationFrames = motionFrames
         
-        return (cannon, motionFrames)
+        return cannon
     }
     
-    private func rotateCannon(cannon: SKSpriteNode, animationFrames: [SKTexture]){
-        cannon.runAction(SKAction.repeatActionForever(
-            SKAction.animateWithTextures(animationFrames,
-                timePerFrame: 0.2,
-                resize: true,
-                restore: true)),
-            withKey:"rotatingCannon")
+    func rotateCannonToAngle(angle: CGFloat, direction: Int) -> SKTexture{
+        var frame = 0;
+        if (direction == 0){ //left
+            if (angle < 30.0){
+                frame = 0
+            } else if (angle < 34.0){
+                frame = 1
+            } else if (angle < 43.0){
+                frame = 2
+            } else if (angle < 49.0){
+                frame = 3
+            } else if (angle < 57.0){
+                frame = 4
+            } else if (angle < 63.0){
+                frame = 5
+            } else if (angle < 69.5){
+                frame = 6
+            } else if (angle < 77.0){
+                frame = 7
+            } else if (angle < 80.5){
+                frame = 8
+            } else if (angle < 84.5){
+                frame = 9
+            } else {
+                frame = 10
+            }
+        } else { //right
+            if (angle < 30.0){
+                frame = 20
+            } else if (angle < 34.0){
+                frame = 19
+            } else if (angle < 43.0){
+                frame = 18
+            } else if (angle < 49.0){
+                frame = 17
+            } else if (angle < 57.0){
+                frame = 16
+            } else if (angle < 63.0){
+                frame = 15
+            } else if (angle < 69.5){
+                frame = 14
+            } else if (angle < 77.0){
+                frame = 13
+            } else if (angle < 80.5){
+                frame = 12
+            } else if (angle < 84.5){
+                frame = 11
+            } else {
+                frame = 10
+            }
+        }
+        return self.cannonAnimationFrames[frame]
     }
+
+    /* ------------ GAME ASTEROIDS -------- */
 
     func createAsteroid() -> (asteroid: SKSpriteNode, animationFrames: [SKTexture]){
         let asteroidAtlas = SKTextureAtlas(named: "Asteroid")
         var motionFrames = [SKTexture]()
         let numImages = asteroidAtlas.textureNames.count / 3
         for (var i = 1; i <= numImages; i++){
-            let textureName = "asteroid.\(i)@2x.png"
+            let textureName = "asteroid.\(i)\(self.deviceResolution).png"
             motionFrames.append(asteroidAtlas.textureNamed(textureName))
         }
         let firstFrame = motionFrames[0]
@@ -89,12 +161,14 @@ class GameObjects {
             restore: true)))
     }
     
+    /* ------------ GAME EXPLOSIONS -------- */
+    
     func createExplosionAtPoint(point: CGPoint) -> SKSpriteNode {
         let explosionAtlas = SKTextureAtlas(named: "Explosion")
         var motionFrames = [SKTexture]()
         let numImages = explosionAtlas.textureNames.count / 3
         for (var i = 1; i <= numImages; i++){
-            let textureName = "explosion.\(i)@2x.png"
+            let textureName = "explosion.\(i)\(self.deviceResolution).png"
             motionFrames.append(explosionAtlas.textureNamed(textureName))
         }
         let firstFrame = motionFrames[0]
@@ -109,7 +183,9 @@ class GameObjects {
         return explosion
     }
     
-    func createMissile() -> SKSpriteNode {
+    /* ------------ GAME MISSILES -------- */
+    
+    private func createMissile() -> SKSpriteNode {
         let missile = SKSpriteNode(imageNamed: "missile")
         missile.position = CGPoint(x: self.screenWidth / 2, y: 0)
         missile.zPosition = 1
@@ -118,7 +194,12 @@ class GameObjects {
     }
     
     func fireMissileTowardsPoint(touchLocation: CGPoint) -> (missile: SKSpriteNode, action: SKAction, fireAngle: CGFloat, direction: Int)? {
-        //if (distanct(lastFireTime, currentTime) < 1 sec, abort
+        //Limit fire rate to each 1/4 second
+        let currentTime = NSDate()
+        if (currentTime.timeIntervalSinceDate(self.lastFireTime) < 0.25){
+            return nil
+        }
+        
         let missile = createMissile()
         let fireAngle = calculateAngle(missile.position, touchPoint: touchLocation)
         if (angleToDegrees(fireAngle) < 28.0){
@@ -139,8 +220,11 @@ class GameObjects {
             direction = 1 // right
             missile.zRotation = -(CGFloat(M_PI / 2) - fireAngle)
         }
+        self.lastFireTime = NSDate()
         return (missile, action, fireAngle, direction)
     }
+    
+    /* ------------ MISSILE LOGIC -------- */
     
     private func distance(staticPoint: CGPoint, endPoint: CGPoint) -> CGFloat{
         let screenPoint = CGPointMake(self.screenWidth, staticPoint.y)
@@ -174,5 +258,34 @@ class GameObjects {
     
     func angleToDegrees(angle: CGFloat) -> CGFloat{
         return angle * CGFloat(180.0 / M_PI)
+    }
+    
+    /* ------------ GAME BUTTONS -------- */
+    
+    func createButton(text: String, withScale scale: CGFloat, atPoint point: CGPoint) -> SKButton {
+        let button = SKButton(defaultButtonImage: self.defaultButton, onTapButtonImage: self.defaultButtonTap, buttonText: text)
+        button.zPosition = 5
+        button.setScale(scale)
+        button.position = point
+        button.name = "\(text)Button"
+        return button
+    }
+    
+    /* ------------ GAME LABELS -------- */
+    
+    func createLabel(text: String, withFontSize fontSize: CGFloat, atPosition position: CGPoint) -> SKLabelNode {
+        let label = SKLabelNode(text: text)
+        label.fontName = "Chalkduster"
+        label.fontSize = fontSize
+        label.fontColor = UIColor.whiteColor()
+        label.position = position
+        label.zPosition = 1
+        return label
+    }
+    
+    func createLabel(text: String, withFontSize fontSize: CGFloat, atPosition position: CGPoint, withZPosition zPos: CGFloat) -> SKLabelNode {
+        let label = self.createLabel(text, withFontSize: fontSize, atPosition: position)
+        label.zPosition = zPos
+        return label
     }
 }

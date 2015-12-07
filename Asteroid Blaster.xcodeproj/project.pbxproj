@@ -19,6 +19,7 @@
 		BC6226DD1C0DFD1700B6CFD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC6226DC1C0DFD1700B6CFD6 /* Assets.xcassets */; };
 		BC6226E01C0DFD1700B6CFD6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC6226DE1C0DFD1700B6CFD6 /* LaunchScreen.storyboard */; };
 		BC6226E81C0DFF5D00B6CFD6 /* GamePhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6226E71C0DFF5D00B6CFD6 /* GamePhysics.swift */; };
+		BCF69BBB1C1506F800248E9F /* SKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF69BBA1C1506F800248E9F /* SKButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		BC6226DF1C0DFD1700B6CFD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BC6226E11C0DFD1700B6CFD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC6226E71C0DFF5D00B6CFD6 /* GamePhysics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamePhysics.swift; sourceTree = "<group>"; };
+		BCF69BBA1C1506F800248E9F /* SKButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				BC6226D71C0DFD1700B6CFD6 /* GameViewController.swift */,
 				BC6226E71C0DFF5D00B6CFD6 /* GamePhysics.swift */,
 				BC32E21B1C10BD320002D355 /* GameObjects.swift */,
+				BCF69BBA1C1506F800248E9F /* SKButton.swift */,
 				BC6226D91C0DFD1700B6CFD6 /* Main.storyboard */,
 				BC6226DC1C0DFD1700B6CFD6 /* Assets.xcassets */,
 				BC6226DE1C0DFD1700B6CFD6 /* LaunchScreen.storyboard */,
@@ -117,6 +120,7 @@
 				TargetAttributes = {
 					BC6226CD1C0DFD1700B6CFD6 = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = 2246FUGJ54;
 					};
 				};
 			};
@@ -161,6 +165,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC32E21C1C10BD320002D355 /* GameObjects.swift in Sources */,
+				BCF69BBB1C1506F800248E9F /* SKButton.swift in Sources */,
 				BC6226E81C0DFF5D00B6CFD6 /* GamePhysics.swift in Sources */,
 				BC6226D61C0DFD1700B6CFD6 /* GameScene.swift in Sources */,
 				BC6226D81C0DFD1700B6CFD6 /* GameViewController.swift in Sources */,
@@ -277,6 +282,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Asteroid Blaster/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "CS320.Asteroid-Blaster";
@@ -288,6 +294,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Asteroid Blaster/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "CS320.Asteroid-Blaster";
