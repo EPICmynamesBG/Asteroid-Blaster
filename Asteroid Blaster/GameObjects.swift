@@ -39,6 +39,9 @@ class GameObjects {
         let logo = SKSpriteNode(imageNamed: "asteroidBlasterLogo")
         logo.position = CGPoint(x: self.screenWidth/2, y: self.screenHeight - logo.size.height / 2 - 32)
         logo.zPosition = 5
+        if (self.deviceResolution == "@3x"){
+            logo.setScale(1.5)
+        }
         return logo
     }
     
@@ -69,6 +72,9 @@ class GameObjects {
         cannon.position = CGPoint(x:(self.screenWidth / 2), y: yLoc)
         cannon.name = "Cannon"
         cannon.zPosition = 2
+        if (self.deviceResolution == "@3x"){
+            cannon.setScale(1.5)
+        }
         self.cannonAnimationFrames = motionFrames
         
         return cannon
@@ -147,7 +153,9 @@ class GameObjects {
         asteroid.name = "asteroid"
         asteroid.zPosition = 1
         asteroid.userData = ["UUID": self.asteroidUUID++]
-        
+        if (self.deviceResolution == "@3x"){
+            asteroid.setScale(4.0)
+        }
         rotateAsteroid(asteroid, animationFrames: motionFrames)
         
         return (asteroid, motionFrames)
@@ -180,6 +188,9 @@ class GameObjects {
         explosion.runAction(explodeAction) { () -> Void in
             explosion.removeFromParent()
         }
+        if (self.deviceResolution == "@3x"){
+            explosion.setScale(1.5)
+        }
         return explosion
     }
     
@@ -190,6 +201,9 @@ class GameObjects {
         missile.position = CGPoint(x: self.screenWidth / 2, y: 0)
         missile.zPosition = 1
         missile.userData = ["UUID": self.missileUUID++]
+        if (self.deviceResolution == "@3x"){
+            missile.setScale(1.5)
+        }
         return missile
     }
     
@@ -268,6 +282,9 @@ class GameObjects {
         button.setScale(scale)
         button.position = point
         button.name = "\(text)Button"
+        if (self.deviceResolution == "@3x"){
+            button.setScale(1.1)
+        }
         return button
     }
     
