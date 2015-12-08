@@ -20,6 +20,7 @@
 		BCC307641C1692E400307C7A /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC307631C1692E400307C7A /* MainScreen.swift */; };
 		BCC307661C1692F800307C7A /* GameOverScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC307651C1692F800307C7A /* GameOverScreen.swift */; };
 		BCC307681C16935000307C7A /* Asteroid.atlas in Resources */ = {isa = PBXBuildFile; fileRef = BCC307671C16935000307C7A /* Asteroid.atlas */; };
+		BCC3076A1C16961100307C7A /* SaveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC307691C16961100307C7A /* SaveManager.swift */; };
 		BCF69BBB1C1506F800248E9F /* SKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF69BBA1C1506F800248E9F /* SKButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		BCC307631C1692E400307C7A /* MainScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScreen.swift; sourceTree = "<group>"; };
 		BCC307651C1692F800307C7A /* GameOverScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScreen.swift; sourceTree = "<group>"; };
 		BCC307671C16935000307C7A /* Asteroid.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Asteroid.atlas; sourceTree = "<group>"; };
+		BCC307691C16961100307C7A /* SaveManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveManager.swift; sourceTree = "<group>"; };
 		BCF69BBA1C1506F800248E9F /* SKButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -82,6 +84,7 @@
 				BCC307651C1692F800307C7A /* GameOverScreen.swift */,
 				BC6226E71C0DFF5D00B6CFD6 /* GamePhysics.swift */,
 				BC32E21B1C10BD320002D355 /* GameObjects.swift */,
+				BCC307691C16961100307C7A /* SaveManager.swift */,
 				BCF69BBA1C1506F800248E9F /* SKButton.swift */,
 				BC6226D91C0DFD1700B6CFD6 /* Main.storyboard */,
 				BC6226DC1C0DFD1700B6CFD6 /* Assets.xcassets */,
@@ -173,6 +176,7 @@
 				BC6226D61C0DFD1700B6CFD6 /* GameScene.swift in Sources */,
 				BCC307661C1692F800307C7A /* GameOverScreen.swift in Sources */,
 				BC6226D81C0DFD1700B6CFD6 /* GameViewController.swift in Sources */,
+				BCC3076A1C16961100307C7A /* SaveManager.swift in Sources */,
 				BC6226D21C0DFD1700B6CFD6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

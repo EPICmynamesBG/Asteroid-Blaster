@@ -20,7 +20,7 @@ class GameObjects {
     private let defaultButtonTap = "AsteroidBlasterButton_click"
     var deviceResolution:String!
     
-    init (scene: GameScene){
+    init (scene: SKScene){
         self.screenWidth = scene.frame.size.width
         self.screenHeight = scene.frame.size.height
         

@@ -8,16 +8,7 @@
 
 import SpriteKit
 
-struct SavedValues {
-    static let Highscore = "Highscore"
-}
-
-class GameScene: SKScene, SKPhysicsContactDelegate, SKButtonDelegate {
-
-    /* Menu buttons */
-    var startButton: SKButton!
-    var replayButton: SKButton!
-    var logo: SKSpriteNode!
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     /* Game items */
     var asteroids = [SKSpriteNode]()
@@ -38,11 +29,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, SKButtonDelegate {
     var timeLabel:SKLabelNode!
     var scoreLabel: SKLabelNode!
     var highScoreLabel: (highscoreText: SKLabelNode!, highscoreValue: SKLabelNode!)
-    var gameOverLabel: SKLabelNode!
-    var newHighscoreLabel: SKLabelNode!
-    
-    /* Saving */
-    let userDefaults = NSUserDefaults.standardUserDefaults()
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -50,7 +36,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, SKButtonDelegate {
         self.gamePhysics = GamePhysics()
         
         self.addChild(self.gameObjects.getBackground())
-        self.logo = self.gameObjects.getLogo()
         
         self.physicsWorld.gravity = GamePhysics.setWorldGravity()
         self.physicsWorld.contactDelegate = self
@@ -59,54 +44,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, SKButtonDelegate {
         self.addChild(self.cannon)
         self.createGameLabels()
         
-        self.showStartMenu()
-        
-    }
-    
-    /* ---- START MENU ---- */
-    func showStartMenu(){
-        self.paused = true
-        self.addChild(self.logo)
-        self.addChild(self.startButton)
-    }
-    
-    /* ---- HIGHSCORE MANAGEMENT ---- */
-    
-    func getSavedHighscore() -> Int{
-        if(self.userDefaults.valueForKey(SavedValues.Highscore) == nil){
-            self.userDefaults.setInteger(0, forKey: SavedValues.Highscore)
-        }
-        return self.userDefaults.integerForKey(SavedValues.Highscore)
-    }
-    
-    func updateHighscore() -> Bool{
-        let currentHigh = self.getSavedHighscore()
-        if (currentHigh < self.gameScore){
-            self.userDefaults.setInteger(self.gameScore, forKey: SavedValues.Highscore)
-            self.highScoreLabel.highscoreValue.text = "\(self.gameScore)"
-            return true
-        }
-        return false
-    }
-    
-    /* ---- GAME REPLAY ---- */
-    
-    func replay() {
-        self.gameOverLabel.removeFromParent()
-        self.newHighscoreLabel.removeFromParent()
-        self.gameScore = 0
-        self.gameOver = false
-        self.startGame()
-    }
-    
-    /* ---- GAME SETUP ---- */
-    func startGame(){
         self.paused = false
-        self.startButton.removeFromParent()
-        self.logo.removeFromParent()
         self.setStartTime()
     }
     
+    /* ---- GAME SETUP ---- */
     
     func createGameLabels(){
         self.timeLabel = self.gameObjects.createLabel("\(30)",
@@ -123,7 +65,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, SKButtonDelegate {
             withFontSize: 16,
             atPosition: CGPoint(x: 48, y: 21),
             withZPosition: 5)
-        self.highScoreLabel.highscoreValue = self.gameObjects.createLabel("\(self.getSavedHighscore())",
+        self.highScoreLabel.highscoreValue = self.gameObjects.createLabel("\(SaveManager.getSavedHighscore())",
             withFontSize: 16,
             atPosition: CGPoint(x: 4, y: 5),
             withZPosition: 5)
@@ -134,22 +76,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, SKButtonDelegate {
         self.addChild(self.scoreLabel)
         self.addChild(self.highScoreLabel.highscoreText)
         self.addChild(self.highScoreLabel.highscoreValue)
-        
-        self.gameOverLabel = self.gameObjects.createLabel("GAME OVER",
-            withFontSize: 52,
-            atPosition: CGPoint(x: self.frame.width / 2, y: 3 * self.frame.height / 4),
-            withZPosition: 5)
-        
-        self.newHighscoreLabel = self.gameObjects.createLabel("NEW HIGHSCORE!",
-            withFontSize: 32,
-            atPosition: CGPoint(x: self.frame.width / 2, y: self.frame.height / 2),
-            withZPosition: 5)
-        
-        self.startButton = self.gameObjects.createButton("Start", withScale: 1.0, atPoint: CGPoint(x: self.frame.width / 2, y: self.frame.height / 3))
-        self.startButton.delegate = self
-        
-        self.replayButton = self.gameObjects.createButton("Replay", withScale: 1.0, atPoint: CGPoint(x: self.frame.width / 2, y: self.frame.height / 3))
-        self.replayButton.delegate = self
     }
     
     func setStartTime(){
@@ -178,6 +104,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, SKButtonDelegate {
                         }
                         
                     }
+                } else {
+                    //gameover
                 }
             } else {
                 //paused
@@ -322,24 +250,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, SKButtonDelegate {
         self.removeChildrenInArray(self.missiles)
         self.removeChildrenInArray(self.explosions)
         
-        self.addChild(gameOverLabel)
-        self.addChild(self.replayButton)
-        if (updateHighscore()){
-            self.addChild(self.newHighscoreLabel)
-        }
+        
     }
     
-    /* ---- SKBUTTON DELEGATE METHODS ---- */
-    
-    func buttonTapRelease(sender: SKButton) {
-        if (sender.name == self.startButton.name){
-            self.startGame()
-        } else if (sender.name == self.replayButton.name){
-            self.replayButton.removeFromParent()
-            self.replay()
-        } else {
-            print("Something unknown was clicked...")
-        }
-    }
     
 }
