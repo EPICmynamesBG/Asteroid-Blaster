@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BC0B50811C10A3E40015A445 /* Cannon.atlas in Resources */ = {isa = PBXBuildFile; fileRef = BC0B50801C10A3E40015A445 /* Cannon.atlas */; };
 		BC26DAC01C14488800E71877 /* Explosion.atlas in Resources */ = {isa = PBXBuildFile; fileRef = BC26DABF1C14488800E71877 /* Explosion.atlas */; };
-		BC32E21A1C10BA790002D355 /* Asteroid.atlas in Resources */ = {isa = PBXBuildFile; fileRef = BC32E2191C10BA790002D355 /* Asteroid.atlas */; };
 		BC32E21C1C10BD320002D355 /* GameObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC32E21B1C10BD320002D355 /* GameObjects.swift */; };
 		BC6226D21C0DFD1700B6CFD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6226D11C0DFD1700B6CFD6 /* AppDelegate.swift */; };
 		BC6226D41C0DFD1700B6CFD6 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = BC6226D31C0DFD1700B6CFD6 /* GameScene.sks */; };
@@ -19,13 +17,14 @@
 		BC6226DD1C0DFD1700B6CFD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC6226DC1C0DFD1700B6CFD6 /* Assets.xcassets */; };
 		BC6226E01C0DFD1700B6CFD6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC6226DE1C0DFD1700B6CFD6 /* LaunchScreen.storyboard */; };
 		BC6226E81C0DFF5D00B6CFD6 /* GamePhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6226E71C0DFF5D00B6CFD6 /* GamePhysics.swift */; };
+		BCC307641C1692E400307C7A /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC307631C1692E400307C7A /* MainScreen.swift */; };
+		BCC307661C1692F800307C7A /* GameOverScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC307651C1692F800307C7A /* GameOverScreen.swift */; };
+		BCC307681C16935000307C7A /* Asteroid.atlas in Resources */ = {isa = PBXBuildFile; fileRef = BCC307671C16935000307C7A /* Asteroid.atlas */; };
 		BCF69BBB1C1506F800248E9F /* SKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF69BBA1C1506F800248E9F /* SKButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BC0B50801C10A3E40015A445 /* Cannon.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Cannon.atlas; sourceTree = "<group>"; };
 		BC26DABF1C14488800E71877 /* Explosion.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Explosion.atlas; sourceTree = "<group>"; };
-		BC32E2191C10BA790002D355 /* Asteroid.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Asteroid.atlas; sourceTree = "<group>"; };
 		BC32E21B1C10BD320002D355 /* GameObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObjects.swift; sourceTree = "<group>"; };
 		BC6226CE1C0DFD1700B6CFD6 /* Asteroid Blaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Asteroid Blaster.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC6226D11C0DFD1700B6CFD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -37,6 +36,9 @@
 		BC6226DF1C0DFD1700B6CFD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BC6226E11C0DFD1700B6CFD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC6226E71C0DFF5D00B6CFD6 /* GamePhysics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamePhysics.swift; sourceTree = "<group>"; };
+		BCC307631C1692E400307C7A /* MainScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScreen.swift; sourceTree = "<group>"; };
+		BCC307651C1692F800307C7A /* GameOverScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScreen.swift; sourceTree = "<group>"; };
+		BCC307671C16935000307C7A /* Asteroid.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Asteroid.atlas; sourceTree = "<group>"; };
 		BCF69BBA1C1506F800248E9F /* SKButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,13 +72,14 @@
 		BC6226D01C0DFD1700B6CFD6 /* Asteroid Blaster */ = {
 			isa = PBXGroup;
 			children = (
+				BCC307671C16935000307C7A /* Asteroid.atlas */,
 				BC26DABF1C14488800E71877 /* Explosion.atlas */,
-				BC32E2191C10BA790002D355 /* Asteroid.atlas */,
-				BC0B50801C10A3E40015A445 /* Cannon.atlas */,
 				BC6226D11C0DFD1700B6CFD6 /* AppDelegate.swift */,
-				BC6226D31C0DFD1700B6CFD6 /* GameScene.sks */,
-				BC6226D51C0DFD1700B6CFD6 /* GameScene.swift */,
 				BC6226D71C0DFD1700B6CFD6 /* GameViewController.swift */,
+				BC6226D31C0DFD1700B6CFD6 /* GameScene.sks */,
+				BCC307631C1692E400307C7A /* MainScreen.swift */,
+				BC6226D51C0DFD1700B6CFD6 /* GameScene.swift */,
+				BCC307651C1692F800307C7A /* GameOverScreen.swift */,
 				BC6226E71C0DFF5D00B6CFD6 /* GamePhysics.swift */,
 				BC32E21B1C10BD320002D355 /* GameObjects.swift */,
 				BCF69BBA1C1506F800248E9F /* SKButton.swift */,
@@ -147,13 +150,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC32E21A1C10BA790002D355 /* Asteroid.atlas in Resources */,
 				BC6226D41C0DFD1700B6CFD6 /* GameScene.sks in Resources */,
 				BC6226E01C0DFD1700B6CFD6 /* LaunchScreen.storyboard in Resources */,
-				BC0B50811C10A3E40015A445 /* Cannon.atlas in Resources */,
 				BC6226DD1C0DFD1700B6CFD6 /* Assets.xcassets in Resources */,
 				BC26DAC01C14488800E71877 /* Explosion.atlas in Resources */,
 				BC6226DB1C0DFD1700B6CFD6 /* Main.storyboard in Resources */,
+				BCC307681C16935000307C7A /* Asteroid.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,9 +167,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC32E21C1C10BD320002D355 /* GameObjects.swift in Sources */,
+				BCC307641C1692E400307C7A /* MainScreen.swift in Sources */,
 				BCF69BBB1C1506F800248E9F /* SKButton.swift in Sources */,
 				BC6226E81C0DFF5D00B6CFD6 /* GamePhysics.swift in Sources */,
 				BC6226D61C0DFD1700B6CFD6 /* GameScene.swift in Sources */,
+				BCC307661C1692F800307C7A /* GameOverScreen.swift in Sources */,
 				BC6226D81C0DFD1700B6CFD6 /* GameViewController.swift in Sources */,
 				BC6226D21C0DFD1700B6CFD6 /* AppDelegate.swift in Sources */,
 			);

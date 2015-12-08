@@ -16,7 +16,6 @@ class GameObjects {
     private var asteroidUUID:Int = 0
     let missileSpeed:CGFloat = 600;
     private var lastFireTime = NSDate()
-    private var cannonAnimationFrames = [SKTexture]()
     private let defaultButton = "AsteroidBlasterButton"
     private let defaultButtonTap = "AsteroidBlasterButton_click"
     var deviceResolution:String!
@@ -59,79 +58,15 @@ class GameObjects {
     /* ------------ GAME CANNON -------- */
     
     func createCannon() -> SKSpriteNode {
-        let cannonAtlas = SKTextureAtlas(named: "Cannon")
-        var motionFrames = [SKTexture]()
-        let numImages = cannonAtlas.textureNames.count / 3
-        for (var i = 1; i <= numImages; i++){
-            let cannonTextureName = "launcher_cannon.\(i)\(self.deviceResolution).png"
-            motionFrames.append(cannonAtlas.textureNamed(cannonTextureName))
-        }
-        let firstFrame = motionFrames[10]
-        let cannon = SKSpriteNode(texture: firstFrame)
-        let yLoc = cannon.size.height / 2
-        cannon.position = CGPoint(x:(self.screenWidth / 2), y: yLoc)
-        cannon.name = "Cannon"
+        let cannon = SKSpriteNode(imageNamed: "cannon2")
+        cannon.position = CGPoint(x: self.screenWidth / 2, y: 0)
         cannon.zPosition = 2
+        cannon.name = "Cannon"
         if (self.deviceResolution == "@3x"){
             cannon.setScale(1.5)
         }
-        self.cannonAnimationFrames = motionFrames
         
         return cannon
-    }
-    
-    func rotateCannonToAngle(angle: CGFloat, direction: Int) -> SKTexture{
-        var frame = 0;
-        if (direction == 0){ //left
-            if (angle < 30.0){
-                frame = 0
-            } else if (angle < 34.0){
-                frame = 1
-            } else if (angle < 43.0){
-                frame = 2
-            } else if (angle < 49.0){
-                frame = 3
-            } else if (angle < 57.0){
-                frame = 4
-            } else if (angle < 63.0){
-                frame = 5
-            } else if (angle < 69.5){
-                frame = 6
-            } else if (angle < 77.0){
-                frame = 7
-            } else if (angle < 80.5){
-                frame = 8
-            } else if (angle < 84.5){
-                frame = 9
-            } else {
-                frame = 10
-            }
-        } else { //right
-            if (angle < 30.0){
-                frame = 20
-            } else if (angle < 34.0){
-                frame = 19
-            } else if (angle < 43.0){
-                frame = 18
-            } else if (angle < 49.0){
-                frame = 17
-            } else if (angle < 57.0){
-                frame = 16
-            } else if (angle < 63.0){
-                frame = 15
-            } else if (angle < 69.5){
-                frame = 14
-            } else if (angle < 77.0){
-                frame = 13
-            } else if (angle < 80.5){
-                frame = 12
-            } else if (angle < 84.5){
-                frame = 11
-            } else {
-                frame = 10
-            }
-        }
-        return self.cannonAnimationFrames[frame]
     }
 
     /* ------------ GAME ASTEROIDS -------- */

@@ -171,9 +171,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, SKButtonDelegate {
                         self.addChild(missile)
                         self.missiles.append(missile)
                         missile.runAction(MissileData!.action)
-                        let newTexture = self.gameObjects.rotateCannonToAngle(self.gameObjects.angleToDegrees(MissileData!.fireAngle),
-                            direction: MissileData!.direction) //0=left, 1=right
-                        self.cannon.texture = newTexture
+                        if (MissileData!.direction == 0){ //left
+                            self.cannon.zRotation = CGFloat(M_PI / 2) - MissileData!.fireAngle
+                        } else { //right
+                            self.cannon.zRotation = -(CGFloat(M_PI / 2) - MissileData!.fireAngle)
+                        }
+                        
                     }
                 }
             } else {
