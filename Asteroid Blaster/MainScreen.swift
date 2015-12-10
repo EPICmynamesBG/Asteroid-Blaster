@@ -65,11 +65,10 @@ class MainScreen: SKScene, SKButtonDelegate {
     /* ---- SKBUTTON DELEGATE METHODS ---- */
     
     func buttonTapRelease(sender: SKButton) {
-        //start game
-//        let skView: SKView = self.view as! SKView
-//        let myScene = GameScene(size: skView.frame.size)
-//        skView.presentScene(myScene)
-        print("Touch!")
-        
+        let nextScene = GameScene(size: self.size)
+        let transition = SKTransition.fadeWithColor(UIColor.whiteColor(), duration: 1.0)
+        nextScene.scaleMode = .AspectFill
+        self.scene?.view?.presentScene(nextScene, transition: transition)
+        self.removeFromParent()
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 
 private struct SavedValues {
     static let Highscore = "Highscore"
+    static let pausedGameTime = "PausedGameTime"
 }
 
 class SaveManager {
@@ -30,5 +31,16 @@ class SaveManager {
             return true
         }
         return false
+    }
+    
+    class func saveGameTime(time: Int) {
+        self.userDefaults.setObject(time, forKey: SavedValues.pausedGameTime)
+    }
+    
+    class func getPausedGameTime() -> Int {
+        if(self.userDefaults.valueForKey(SavedValues.pausedGameTime) == nil){
+            self.userDefaults.setObject(NSDate(), forKey: SavedValues.pausedGameTime)
+        }
+        return self.userDefaults.integerForKey(SavedValues.pausedGameTime)
     }
 }

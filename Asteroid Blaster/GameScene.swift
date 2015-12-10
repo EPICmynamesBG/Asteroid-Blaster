@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameScene: SKScene, SKPhysicsContactDelegate {
+class GameScene: SKScene, SKPhysicsContactDelegate, SKButtonDelegate {
     
     /* Game items */
     var asteroids = [SKSpriteNode]()
@@ -29,9 +29,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var timeLabel:SKLabelNode!
     var scoreLabel: SKLabelNode!
     var highScoreLabel: (highscoreText: SKLabelNode!, highscoreValue: SKLabelNode!)
+    var pauseLabel: SKLabelNode!
+    var pauseLabel2: SKLabelNode!
+    var pauseButton: SKButton!
+    
+    /* Pausing */
+    var resumeTap: UITapGestureRecognizer!
+    var notificationSentObject:String!
+    let pauseUILabel = UILabel()
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "pauseGame:", name: "pauseGame", object: self.notificationSentObject)
+        
         self.gameObjects = GameObjects(scene: self)
         self.gamePhysics = GamePhysics()
         
@@ -46,12 +56,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.paused = false
         self.setStartTime()
+        self.resumeTap = UITapGestureRecognizer(target: self, action: "unPauseFromAppClose:")
     }
     
     /* ---- GAME SETUP ---- */
     
     func createGameLabels(){
-        self.timeLabel = self.gameObjects.createLabel("\(30)",
+        self.timeLabel = self.gameObjects.createLabel("\(31)",
             withFontSize: 48,
             atPosition: CGPoint(x: 48, y: self.frame.height - 48),
             withZPosition: 5)
@@ -72,10 +83,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //reposition based on size to align left edges
         self.highScoreLabel.highscoreValue.position.x = self.highScoreLabel.highscoreValue.position.x + self.highScoreLabel.highscoreValue.frame.width / 2
         
+        self.pauseButton = self.gameObjects.createButton("||", withScale: 0.3, atPoint: CGPoint(x: self.size.width - 32, y: 26))
+        self.pauseButton.delegate = self
+        
+        self.pauseLabel = self.gameObjects.createLabel("Paused", withFontSize: 42, atPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), withZPosition: 6)
+        self.pauseLabel2 = self.gameObjects.createLabel("Tap anywhere to continue", withFontSize: 22, atPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2 - 40), withZPosition: 6)
+        
+        self.pauseUILabel.text = "Tap anywhere to continue"
+        self.pauseUILabel.font = UIFont(name: "Chalkduster", size: 22)
+        self.pauseUILabel.textColor = UIColor.whiteColor()
+        self.pauseUILabel.frame.size = CGSize(width: 330, height: 70)
+        self.pauseUILabel.frame.origin = CGPoint(x: (self.scene!.view?.frame.width)! / 2 - (self.pauseUILabel.frame.width / 2), y: (self.scene!.view?.frame.height)! / 2)
+        
         self.addChild(self.timeLabel)
         self.addChild(self.scoreLabel)
         self.addChild(self.highScoreLabel.highscoreText)
         self.addChild(self.highScoreLabel.highscoreValue)
+        self.addChild(self.pauseButton)
     }
     
     func setStartTime(){
@@ -108,7 +132,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     //gameover
                 }
             } else {
-                //paused
+                resumeGame()
             }
             
         }
@@ -250,8 +274,57 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.removeChildrenInArray(self.missiles)
         self.removeChildrenInArray(self.explosions)
         
+        let nextScene = GameOverScreen(size: self.size)
+        nextScene.gameScore = self.gameScore
+        let transition = SKTransition.fadeWithColor(UIColor.whiteColor(), duration: 1.0)
+        nextScene.scaleMode = .AspectFill
+        self.scene?.view?.presentScene(nextScene, transition: transition)
+        self.removeFromParent()
+    }
+    
+    /* ---- PAUSE GAME ---- */
+    
+    func pauseGame(sender: AnyObject?) {
+        SaveManager.saveGameTime(31-self.gameTime)
+        
+        if (sender!.isKindOfClass(SKButton)){
+            self.paused = true
+            self.addChild(self.pauseLabel)
+            self.addChild(self.pauseLabel2)
+        } else { //notification about app close
+            if ((sender?.userInfo["Sender"])! as! String == "Background"){
+//                self.addChild(self.pauseLabel)
+//                self.addChild(self.pauseLabel2)
+                self.scene?.view?.addSubview(self.pauseUILabel)
+            }
+            
+            self.scene?.view?.addGestureRecognizer(self.resumeTap)
+            self.paused = true
+            self.scene?.view?.paused = true
+        }
         
     }
     
+    func unPauseFromAppClose(sender: AnyObject?) {
+        self.scene?.view?.paused = false
+        self.pauseLabel.removeFromParent()
+        self.pauseLabel2.removeFromParent()
+        self.startTime = NSDate().dateByAddingTimeInterval(NSTimeInterval(-SaveManager.getPausedGameTime()))
+        self.scene!.view?.removeGestureRecognizer(self.resumeTap)
+        self.pauseUILabel.removeFromSuperview()
+    }
+    
+    func resumeGame() {
+        self.startTime = NSDate().dateByAddingTimeInterval(NSTimeInterval(-SaveManager.getPausedGameTime()))
+        self.paused = false
+        self.pauseLabel.removeFromParent()
+        self.pauseLabel2.removeFromParent()
+    }
+    
+    func buttonTapRelease(sender: SKButton) {
+        if (self.paused == false){
+            self.pauseGame(sender)
+        }
+    }
     
 }

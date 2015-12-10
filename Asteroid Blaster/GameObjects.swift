@@ -91,17 +91,25 @@ class GameObjects {
         if (self.deviceResolution == "@3x"){
             asteroid.setScale(4.0)
         }
-        rotateAsteroid(asteroid, animationFrames: motionFrames)
+        animateAsteroid(asteroid, animationFrames: motionFrames)
+        rotateAsteroid(asteroid)
         
         return (asteroid, motionFrames)
     }
     
-    private func rotateAsteroid(asteroid: SKSpriteNode, animationFrames: [SKTexture]){
+    private func animateAsteroid(asteroid: SKSpriteNode, animationFrames: [SKTexture]){
         asteroid.runAction(SKAction.repeatActionForever(
             SKAction.animateWithTextures(animationFrames,
             timePerFrame: 0.1,
             resize: false,
             restore: true)))
+    }
+    
+    private func rotateAsteroid(asteroid: SKSpriteNode) {
+        let randomDirectionRotate: CGFloat = 1 == arc4random_uniform(UInt32(2)) ? 1 : -1
+        asteroid.runAction(SKAction.repeatActionForever(
+            SKAction.rotateByAngle(randomDirectionRotate * CGFloat(M_PI / 4.0),
+                duration: 0.2)));
     }
     
     /* ------------ GAME EXPLOSIONS -------- */
@@ -195,9 +203,9 @@ class GameObjects {
         let cannonPoint = CGPoint(x: self.screenWidth / 2, y: 0)
         var screenPoint: CGPoint!
         if (touchLocation.x < cannonPoint.x){
-            screenPoint = CGPoint(x: 0 - 10, y: 0)
+            screenPoint = CGPoint(x: 0 - 60, y: 0)
         } else {
-            screenPoint = CGPoint(x: self.screenWidth + 10, y: 0)
+            screenPoint = CGPoint(x: self.screenWidth + 60, y: 0)
         }
         
         let bottomLen = abs(screenPoint.x - cannonPoint.x)
